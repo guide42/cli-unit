@@ -9,6 +9,7 @@
     phars:
       composer: https://getcomposer.org/composer.phar
       phpunit:  https://phar.phpunit.de/phpunit.phar
+      box:      https://github.com/box-project/box2/releases/download/2.6.0/box-2.6.0.phar
     php_ini:
       "default_charset": "UTF-8"
       "date.timezone":   "UTC"
