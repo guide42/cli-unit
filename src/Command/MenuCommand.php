@@ -61,10 +61,14 @@ final class MenuCommand extends Command
 
             foreach ($strategy->findTests($this->getApplication()->getWorkingDirectory()) as $test) {
                 $menuBuilder->addItem($test->getName(), function(CliMenu $menu) use($test) {
+                    $menu->close();
+
                     $process = new Process($test->getCommand(), '/tmp', null, null, 300);
                     $process->run();
 
                     print($process->getOutput());
+
+                    $menu->open();
                 });
             }
         }
