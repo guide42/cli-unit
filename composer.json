@@ -1,0 +1,32 @@
+{
+    "name": "guide42/cli-unit",
+    "description": "Cli menu for tests",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Juan M Martínez",
+            "email": "jm@guide42.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "~5.0"
+    },
+    "require": {
+        "php": ">=5.6",
+        "php-school/cli-menu": "^1.0",
+        "symfony/console": "^3.0",
+        "symfony/process": "^3.0"
+    },
+    "autoload" : {
+        "psr-4" : {
+            "Guide42\\CliUnit\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": { "Guide42\\CliUnitTest\\": "test" }
+    },
+    
+    "bin": [
+        "bin/cli-unit"
+    ]
+}

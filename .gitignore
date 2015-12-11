@@ -1,0 +1,4 @@
+*.phar
+/.vagrant/
+/composer.lock
+/vendor/
