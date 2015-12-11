@@ -31,4 +31,11 @@ interface StrategyInterface
      * @param TestCase $test
      */
     public function executeTest(TestCaseInterface $test);
+
+    /**
+     * Name of this strategy.
+     *
+     * @return string
+     */
+    public function getName();
 }

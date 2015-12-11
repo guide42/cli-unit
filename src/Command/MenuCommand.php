@@ -4,6 +4,7 @@ namespace Guide42\CliUnit\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
 
 use PhpSchool\CliMenu\CliMenuBuilder;
 use PhpSchool\CliMenu\CliMenu;
@@ -53,7 +54,22 @@ final class MenuCommand extends Command
         $menuBuilder = new CliMenuBuilder;
         $menuBuilder->setTitle('CLI Unit');
 
-        $this->menu = $menuBuilder->addLineBreak('-')->build();
+        foreach ($this->getApplication()->getStrategies() as $strategy) {
+            $menuBuilder->addLineBreak();
+            $menuBuilder->addStaticItem($strategy->getName());
+            $menuBuilder->addStaticItem(str_repeat('-', strlen($strategy->getName())));
+
+            foreach ($strategy->findTests($this->getApplication()->getWorkingDirectory()) as $test) {
+                $menuBuilder->addItem($test->getName(), function(CliMenu $menu) use($test) {
+                    $process = new Process($test->getCommand(), '/tmp', null, null, 300);
+                    $process->run();
+
+                    print($process->getOutput());
+                });
+            }
+        }
+
+        $this->menu = $menuBuilder->addLineBreak()->addLineBreak('-')->build();
     }
 
     /**

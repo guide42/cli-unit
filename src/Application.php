@@ -50,6 +50,16 @@ class Application extends Console
     }
 
     /**
+     * Retrieve the working directory.
+     *
+     * @return string
+     */
+    public function getWorkingDirectory()
+    {
+        return $this->workingDirectory;
+    }
+
+    /**
      * Register a new strategy.
      *
      * @param StrategyInterface $strategy
@@ -59,5 +69,15 @@ class Application extends Console
         if ($strategy->isAvailable()) {
             $this->strategies[] = $strategy;
         }
+    }
+
+    /**
+     * Retrieve the available strategies.
+     *
+     * @return array
+     */
+    public function getStrategies()
+    {
+        return $this->strategies;
     }
 }
