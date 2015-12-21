@@ -1,4 +1,6 @@
 *.phar
 /.vagrant/
+/Vagrantfile
+/provision.yml
 /composer.lock
 /vendor/
