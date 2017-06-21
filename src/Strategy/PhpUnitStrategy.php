@@ -15,7 +15,8 @@ class PhpUnitStrategy implements StrategyInterface
      */
     public function isAvailable()
     {
-        return class_exists('PHPUnit_Framework_TestCase');
+        return class_exists('\\PHPUnit_Framework_TestCase')
+            || class_exists('\\PHPUnit\\Framework\\TestCase');
     }
 
     /**
@@ -24,9 +25,13 @@ class PhpUnitStrategy implements StrategyInterface
      */
     public function findTests($directory)
     {
-        $config = \PHPUnit_Util_Configuration::getInstance(
-            $this->findConfigFile($directory)
-        );
+        $configFile = $this->findConfigFile($directory);
+
+        if (class_exists('PHPUnit_Util_Configuration')) {
+            $config = \PHPUnit_Util_Configuration::getInstance($configFile);
+        } else {
+            $config = \PHPUnit\Util\Configuration::getInstance($configFile);
+        }
 
         foreach ($config->getTestSuiteConfiguration() as $suite) {
             $command = 'ls';
