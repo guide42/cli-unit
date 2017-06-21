@@ -3,7 +3,7 @@
 namespace Guide42\CliUnit\Strategy;
 
 /**
- * Interface for all test cases.
+ * A source test case.
  *
  * @author Juan M Martínez <jm@guide42.com>
  */
@@ -15,20 +15,13 @@ class TestCase
     private $name;
 
     /**
-     * @var string
-     */
-    private $command;
-
-    /**
      * Constructor.
      *
-     * @param string $name
-     * @param string $command
+     * @param string $name of the test case
      */
-    public function __construct($name, $command)
+    public function __construct($name)
     {
         $this->name = $name;
-        $this->command = $command;
     }
 
     /**
@@ -39,15 +32,5 @@ class TestCase
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Command to execute test.
-     *
-     * @return string
-     */
-    public function getCommand()
-    {
-        return $this->command;
     }
 }

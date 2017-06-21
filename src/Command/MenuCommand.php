@@ -4,7 +4,6 @@ namespace Guide42\CliUnit\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
 use PhpSchool\CliMenu\CliMenuBuilder;
 use PhpSchool\CliMenu\CliMenu;
@@ -60,15 +59,15 @@ final class MenuCommand extends Command
             $menuBuilder->addStaticItem(str_repeat('-', strlen($strategy->getName())));
 
             foreach ($strategy->findTests($this->getApplication()->getWorkingDirectory()) as $test) {
-                $menuBuilder->addItem($test->getName(), function(CliMenu $menu) use($test) {
+                $menuBuilder->addItem($test->getName(), function(CliMenu $menu) use($strategy, $test) {
                     $menu->close();
-
-                    $process = new Process($test->getCommand(), '/tmp', null, null, 300);
-                    $process->run();
-
-                    print($process->getOutput());
-
+                    $result = $strategy->executeTest($test);
                     $menu->open();
+                    if ($result->isFailure()) {
+                        $menu->flash($result->getOutput())->display();
+                    } else {
+                        $menu->flash('OK')->display();
+                    }
                 });
             }
         }

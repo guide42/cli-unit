@@ -34,8 +34,7 @@ class PhpUnitStrategy implements StrategyInterface
         }
 
         foreach ($config->getTestSuiteConfiguration() as $suite) {
-            $command = 'ls';
-            yield new TestCase($suite->getName(), $command);
+            yield new PhpUnitTestCase($suite->getName(), $suite);
         }
     }
 
@@ -67,9 +66,17 @@ class PhpUnitStrategy implements StrategyInterface
      * {@inheritDoc}
      * @see \Guide42\CliUnit\Strategy\StrategyInterface::executeTest()
      */
-    public function executeTest(TestCaseInterface $test)
+    public function executeTest(TestCase $test)
     {
+        if (!$test instanceof PhpUnitTestCase) {
+            throw new \InvalidArgumentException('');
+        }
 
+        $suiteResult = $test->getSuite()->run();
+        $testResult = $suiteResult->wasSuccessful() ? TestResult::SUCCESS
+                                                    : TestResult::FAILURE;
+
+        return new TestResult($testResult, 'Error found');
     }
 
     /**

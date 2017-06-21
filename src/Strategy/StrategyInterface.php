@@ -21,7 +21,7 @@ interface StrategyInterface
      *
      * @param string $directory
      *
-     * @return TestCaseCollection
+     * @return array[TestCase]
      */
     public function findTests($directory);
 
@@ -29,8 +29,10 @@ interface StrategyInterface
      * Execute a single TestCase.
      *
      * @param TestCase $test
+     *
+     * @return TestResult
      */
-    public function executeTest(TestCaseInterface $test);
+    public function executeTest(TestCase $test);
 
     /**
      * Name of this strategy.
